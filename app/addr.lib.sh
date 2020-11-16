@@ -34,7 +34,12 @@ add() {
 
 search() {
   findRecord
-  info "You found $(head -$? $BOOK | tail -1)"
+  local foundRecord="$?"
+  if [ "$foundRecord" -eq "0" ]; then
+    info "Records not found"
+  else
+    info "You found $(head -$foundRecord $BOOK | tail -1)"
+  fi
 }
 
 findRecord() {
@@ -44,9 +49,12 @@ findRecord() {
 
   if [ -n "$found" ]; then
     local count=$(recordsNumber "$term")
+    if [ "$count" -eq "1" ]; then
+      return $(grep -in "$record" "$BOOK" | cut -d: -f1)
+    fi
+
     echo "Found $count records"
     echo "$found" | awk '{print "("FNR") - "$0}'
-
     local recordNumber
     read -p "Enter the record number [1-$count]: " recordNumber
     while [[ ! $recordNumber =~ ^[0-9]+$ ]] || [[ "$recordNumber" -lt "1" ]] || [[ "$recordNumber" -gt "$count" ]]; do

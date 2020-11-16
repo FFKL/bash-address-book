@@ -1,0 +1,34 @@
+YELLOW='\e[33m'
+LIGHT_BLUE='\e[34m'
+GREEN='\e[32m'
+RED='\e[31m'
+CYAN='\e[36m'
+NO_COLOR='\e[0m'
+
+WELCOME_STYLE="$LIGHT_BLUE"
+MENU_NUMBER_STYLE="$YELLOW"
+DEFAULT_STYLE="$NO_COLOR"
+QUESTION_STYLE="$GREEN"
+ERROR_STYLE="$RED"
+NAME_STYLE="$YELLOW"
+INFO_STYLE="$NO_COLOR"
+
+question() {
+  echo -en "${QUESTION_STYLE}$1${DEFAULT_STYLE}"
+}
+
+menuItem() {
+  echo -e " ${MENU_NUMBER_STYLE}(${1})${DEFAULT_STYLE} ${2}"
+}
+
+info() {
+  echo -e "$INFO_STYLE$1$DEFAULT_STYLE"
+}
+
+error() {
+  echo -e "${ERROR_STYLE}$1${DEFAULT_STYLE}"
+}
+
+showRecord() {
+  echo -e "$NAME_STYLE$1$DEFAULT_STYLE\t$2\t$3"
+}
